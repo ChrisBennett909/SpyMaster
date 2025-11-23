@@ -2,14 +2,16 @@ package main
 
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"time"
+	"strings"
 	"github.com/fsnotify/fsnotify"
 )
 
-func NewOperation(dirToWatch string){
+func NewOperation(dirToWatch string, done chan bool){
 	spyMaster, err := fsnotify.NewWatcher()
 	if err != nil{
 		log.Fatal("Failed to make new watcher")
@@ -25,52 +27,55 @@ func NewOperation(dirToWatch string){
 
 	fmt.Println("Spy Master in position")
 
-	done := make(chan bool)
-	
-	go func(){
-		for {
-		    select{
-			case event, okay := <-spyMaster.Events:
-			    if !okay{
-				return
-			    }
+	for {
+	    select{
+		case <-done:
+		    fmt.Println("Stopping Watcher...")
+		    return 
 
-			    if event.Op&fsnotify.Create == fsnotify.Create{
-				info, err := os.Stat(event.Name)
-				if err != nil{
-				    log.Println("Failed to read event data", err)
-					continue
-				    }
-
-				    if info.IsDir(){
-					fmt.Println("Folder Created: ", event.Name)
-					logReport("Folder Created: " + event.Name)
-				    }else{
-					fmt.Println("File Created: ", event.Name)
-					logReport("File Created: " + event.Name)
-				    }
-			    }
-
-			    if event.Op&fsnotify.Write == fsnotify.Write{
-				fmt.Println("File modified: ", event.Name)
-				logReport("File Modified: " + event.Name)
-			    }
-
-			    if event.Op&fsnotify.Rename == fsnotify.Rename{
-			        fmt.Println("File/Folder renamed or moved", event.Name)
-				logReport("File/Folder Renamed or Moved: " + event.Name)
-			    }
-
-			case err, okay := <-spyMaster.Errors:
-			    if !okay{
-				return
-			    }
-			    log.Println("Watcher Error: ", err)
+		case event, okay := <-spyMaster.Events:
+		    if !okay{
+			return
 		    }
-		}
-	}()
 
-	<-done
+		    if event.Op&fsnotify.Create == fsnotify.Create{
+			info, err := os.Stat(event.Name)
+			if err != nil{
+			    log.Println("Failed to read event data", err)
+				continue
+			    }
+
+			    if info.IsDir(){
+				fmt.Println("Folder Created: ", event.Name)
+				logReport("Folder Created: " + event.Name)
+
+				dirErr := spyMaster.Add(event.Name)
+				if dirErr != nil{
+					log.Println("Failed to add new folder to  watchlist")
+				}
+			    }else{
+				fmt.Println("File Created: ", event.Name)
+				logReport("File Created: " + event.Name)
+			    }
+		    }
+
+		    if event.Op&fsnotify.Write == fsnotify.Write{
+			fmt.Println("File modified: ", event.Name)
+			logReport("File Modified: " + event.Name)
+		    }
+
+		    if event.Op&fsnotify.Rename == fsnotify.Rename{
+			fmt.Println("File/Folder renamed or moved", event.Name)
+			logReport("File/Folder Renamed or Moved: " + event.Name)
+		    }
+
+		case err, okay := <-spyMaster.Errors:
+		    if !okay{
+			return
+		    }
+		    log.Println("Watcher Error: ", err)
+	    }
+	}
 }
 
 func logReport(note string){
@@ -93,6 +98,39 @@ func logReport(note string){
 	}
 }
 
+func readTerminal(ch chan string) {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for {
+	    fmt.Println(">>")
+	    if scanner.Scan(){
+		input := strings.TrimSpace(scanner.Text())
+		ch <- input
+	    }
+
+	    err := scanner.Err(); 
+	    if err != nil{
+		log.Println("Error reading input: ", err)
+	    }
+	}
+}
+
 func main(){
-    NewOperation("./testFolder")
+    done := make(chan bool)
+    inputChan := make(chan string)
+
+    go readTerminal(inputChan)
+
+    go NewOperation("./Storage", done)
+
+    for input := range inputChan {
+	if input =="exit"{
+	    fmt.Println("Exiting ...")
+	    close(done)
+	    close(inputChan)
+	    break
+	}else {
+		fmt.Println("Echo: ", input)
+	}
+    }
 }

@@ -8,3 +8,36 @@ File Modified: testFolder/fooFolder 2025-11-23 14:44:08
 File Modified: testFolder/.fooFolder.swp 2025-11-23 14:44:08
 File/Folder Renamed or Moved: testFolder/fooFile 2025-11-23 14:44:22
 File Created: testFolder/newFooFile 2025-11-23 14:44:22
+Folder Created: testFolder/hello 2025-11-23 20:04:51
+Folder Created: testFolder/hello/secondFolder 2025-11-23 20:05:01
+File Created: testFolder/hello/.subFolderFile.swp 2025-11-23 20:05:10
+File Created: testFolder/hello/.subFolderFile.swp 2025-11-23 20:05:10
+File Modified: testFolder/hello/.subFolderFile.swp 2025-11-23 20:05:10
+File Modified: testFolder/hello/.subFolderFile.swp 2025-11-23 20:05:15
+File Created: testFolder/hello/subFolderFile 2025-11-23 20:05:20
+File Modified: testFolder/hello/subFolderFile 2025-11-23 20:05:20
+File Modified: testFolder/hello/.subFolderFile.swp 2025-11-23 20:05:20
+File Created: testFolder/.hello.txt.swp 2025-11-23 20:12:37
+File Created: testFolder/.hello.txt.swp 2025-11-23 20:12:37
+File Modified: testFolder/.hello.txt.swp 2025-11-23 20:12:37
+File Modified: testFolder/.hello.txt.swp 2025-11-23 20:12:41
+File Created: testFolder/hello.txt 2025-11-23 20:12:44
+File Modified: testFolder/hello.txt 2025-11-23 20:12:44
+File Modified: testFolder/hello.txt 2025-11-23 20:12:44
+File Modified: testFolder/.hello.txt.swp 2025-11-23 20:12:44
+Folder Created: testFolder/newSubFolder 2025-11-23 20:12:52
+Folder Created: testFolder/newSubFolder/secondSubFolder 2025-11-23 20:13:09
+File Created: testFolder/newSubFolder/secondSubFolder/.file.swp 2025-11-23 20:13:20
+File Created: testFolder/newSubFolder/secondSubFolder/.file.swp 2025-11-23 20:13:20
+File Modified: testFolder/newSubFolder/secondSubFolder/.file.swp 2025-11-23 20:13:20
+File Modified: testFolder/newSubFolder/secondSubFolder/.file.swp 2025-11-23 20:13:22
+File Created: testFolder/newSubFolder/secondSubFolder/file 2025-11-23 20:13:27
+File Modified: testFolder/newSubFolder/secondSubFolder/file 2025-11-23 20:13:27
+File Modified: testFolder/newSubFolder/secondSubFolder/file 2025-11-23 20:13:27
+File Modified: testFolder/newSubFolder/secondSubFolder/.file.swp 2025-11-23 20:13:27
+File Modified: testFolder/newSubFolder/secondSubFolder/.file.swp 2025-11-23 20:13:28
+File/Folder Renamed or Moved: testFolder/newSubFolder/secondSubFolder/file 2025-11-23 20:13:33
+File Created: testFolder/newSubFolder/secondSubFolder/file~ 2025-11-23 20:13:33
+File Created: testFolder/newSubFolder/secondSubFolder/file 2025-11-23 20:13:33
+File Modified: testFolder/newSubFolder/secondSubFolder/file 2025-11-23 20:13:33
+File Modified: testFolder/newSubFolder/secondSubFolder/.file.swp 2025-11-23 20:13:33
