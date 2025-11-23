@@ -1,0 +1,10 @@
+Folder Created: testFolder/hello 2025-11-23 14:43:48
+File Created: testFolder/.fooFolder.swp 2025-11-23 14:43:55
+File Modified: testFolder/.fooFolder.swp 2025-11-23 14:43:55
+File Modified: testFolder/.fooFolder.swp 2025-11-23 14:44:00
+File Created: testFolder/fooFolder 2025-11-23 14:44:08
+File Modified: testFolder/fooFolder 2025-11-23 14:44:08
+File Modified: testFolder/fooFolder 2025-11-23 14:44:08
+File Modified: testFolder/.fooFolder.swp 2025-11-23 14:44:08
+File/Folder Renamed or Moved: testFolder/fooFile 2025-11-23 14:44:22
+File Created: testFolder/newFooFile 2025-11-23 14:44:22
