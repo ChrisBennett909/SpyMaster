@@ -69,6 +69,11 @@ func NewOperation(dirToWatch string, done chan bool){
 			logReport("File/Folder Renamed or Moved: " + event.Name)
 		    }
 
+            if event.Op&fsnotify.Remove == fsnotify.Remove{
+                fmt.Println("File Deleted:", event.Name)
+                logReport("File Deleted:" + event.Name)
+            }
+
 		case err, okay := <-spyMaster.Errors:
 		    if !okay{
 			return
