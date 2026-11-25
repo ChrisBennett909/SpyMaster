@@ -11,7 +11,25 @@ import (
 	"time"
 	"strings"
 	"github.com/fsnotify/fsnotify"
+	"path/filepath"
+	"io/fs"
 )
+
+func watchTree(watcher *fsnotify.Watcher, root string) error {
+	return filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			log.Println("Walk error for", path, ":", err)
+			return nil;
+		}
+
+		if d.IsDir(){
+			if addErr := watcher.Add(path); addErr != nil {
+				log.Println("Failed to add folder to watchlist", path, addErr);
+			}
+		}
+		return nil;
+	})
+}
 
 func NewOperation(dirToWatch string, done chan bool){
 	spyMaster, err := fsnotify.NewWatcher()
@@ -21,11 +39,17 @@ func NewOperation(dirToWatch string, done chan bool){
 	}
 	defer spyMaster.Close()
 
-	err = spyMaster.Add(dirToWatch)
+	if err := watchTree(spyMaster, dirToWatch); err != nil {
+		log.Fatal("Failed to walk directory tree:", err);
+		return
+	}
+
+	/*err = spyMaster.Add(dirToWatch)
 	if err != nil{
 		log.Fatal("Failed to add directory")
 		return
 	}
+	*/
 
 	fmt.Println("Spy Master in position")
 
