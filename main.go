@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 	"strings"
 	"github.com/fsnotify/fsnotify"
@@ -122,12 +124,17 @@ func readTerminal(ch chan string) {
 
 func main(){
     done := make(chan bool)
-    inputChan := make(chan string)
+    sigChan := make(chan os.Signal, 1)
 
-    go readTerminal(inputChan)
+    //go readTerminal(inputChan)
 
     go NewOperation("./Storage", done)
 
+    signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+    <-sigChan
+    fmt.Println("sMaster Shutting Down")
+
+    /*
     for input := range inputChan {
 	if input =="exit"{
 	    fmt.Println("Exiting ...")
@@ -138,4 +145,5 @@ func main(){
 		fmt.Println("Echo: ", input)
 	}
     }
+    */
 }
